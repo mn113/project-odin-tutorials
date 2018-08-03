@@ -1,2 +1,21 @@
-<h3>Guess the number (1-100) I'm thinking of!</h3>
-<p>(It is <%= number %>)</p>
+<html>
+<head>
+    <title>Number Guesser<% if data[:guess] %>: guessed <%= data[:guess] %><% end %></title>
+</head>
+<body>
+    <h3>Guess the number (1-100) I'm thinking of!</h3>
+    <p>(It is <%= data[:number] %>)</p>
+
+    <form action="/guess/" method="GET">
+        <p>Try to guess what the number is!</p>
+        <input type='text' name='guess' />
+        <input type='submit' value='Guess!' />
+    </form>
+
+    <% if data[:analysis] %>
+        <p><%= data[:analysis] %></p>
+    <% end %>
+
+    <button>Try a new number</button>
+</body>
+</html>
