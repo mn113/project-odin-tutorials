@@ -1,23 +1,25 @@
 require 'sinatra'
+require 'sinatra/reloader'
+
 
 prng = Random.new
 number = 0
 
 get '/newnumber' do
     number = prng.rand(100) + 1     # generates 0-99
-    "Guess the number (1-100) I'm thinking of!"
+    erb :index, :locals => {:number => number}
 end
 
 post '/guess/:guess' do
-    if guess > number + 20
+    if params['guess'] > number + 20
         return 'Ho Lee Fuk'
-    elsif guess > number
-        return '2H'
-    elsif guess < number
-        return '2L'
-    elsif guess < number - 20
+    elsif params['guess'] > number
+        return 'Hi'
+    elsif params['guess'] < number
+        return 'Lo'
+    elsif params['guess'] < number - 20
         return 'Wi Tu Lo'
-    elsif guess == number
+    elsif params['guess'] == number
         return 'Correct'
     end
 end
