@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'chroma'
 
 prng = Random.new
 number = 0
@@ -20,7 +21,8 @@ get '/guess/' do
         data: {
             :number => number,
             :guess => guess,
-            :analysis => analyse_guess(guess, number)
+            :analysis => analyse_guess(guess, number),
+            :color => color_diff(guess, number)
         }
     }
 end
@@ -37,4 +39,12 @@ def analyse_guess(guess, number)
     elsif guess == number
         'CORRECT!'
     end
+end
+
+def color_diff(guess, number)
+    # 0 diff => 0,255,0 green hue = 60
+    # 100 diff => 255,0,0 red hue = 0
+    diff = (guess - number).abs
+    # color scale gem
+    "hsv(#{80 - diff * 0.8}, 1, 0.75)".paint.to_hex
 end

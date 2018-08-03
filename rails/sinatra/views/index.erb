@@ -13,9 +13,11 @@
     </form>
 
     <% if data[:analysis] %>
-        <p><%= data[:analysis] %></p>
+        <p style="color: <%= data[:color] %>"><%= data[:analysis] %></p>
     <% end %>
 
-    <button>Try a new number</button>
+    <form method="get" action="/newnumber">
+        <button type="submit">Try a new number</button>
+    </form>
 </body>
 </html>
