@@ -1,19 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
-class Secret
-    attr_reader :value
-
-    def initialize()
-        @value = []
-        4.times do
-            @value << Colours.keys[rand(Colours.keys.size)]
-        end
-        puts @value
-    end
-end
-
-$Colours = {
+@@Colours = {
     :red => '❤️',
     :orange => '🧡',
     :yellow => '💛',
@@ -22,21 +10,33 @@ $Colours = {
     :purple => '💜'
 }
 
-get '/new' do   # new game route
-    $secret = Secret.new
-    $history = []
+class Secret
+    attr_reader :value
+
+    def initialize()
+        @value = []
+        4.times do
+            @value << @@Colours.keys[rand(@@Colours.keys.size)]
+        end
+        puts @value
+    end
+end
+
+get '/mastermind/new' do   # new game route
+    @@secret = Secret.new
+    @@history = []
     erb :mastermind
 end
 
-get '/' do      # refresh page route
+get '/mastermind/' do      # refresh page route
     erb :mastermind
 end
 
-post '/' do     # make a guess route
+post '/mastermind/' do     # make a guess route
     # extract params
     guess = 'col1.col2.col3.col4'.split('.').map{ |key| params[key].to_sym }
     puts guess
-    $history << {
+    @@history << {
         :guess => guess,
         :score => analyse(guess.clone)
     }
@@ -45,7 +45,7 @@ end
 
 def analyse(pegs)
     score = []
-    tempsecret = $secret.value.clone
+    tempsecret = @@secret.value.clone
     # extract blacks
     pegs.each_with_index do |peg, i|
         if peg == tempsecret[i]

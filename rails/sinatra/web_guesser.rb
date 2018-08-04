@@ -1,32 +1,32 @@
 require 'sinatra'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if development?
 require 'chroma'
 
-number = rand(100)
-guesses_left = 5
+@@number
+@@guesses_left
 
-get '/newnumber' do
-    number = rand(100)
-    guesses_left = 5
+get '/guesser/new' do
+    @@number = rand(100)
+    @@guesses_left = 5
     erb :web_guesser, :locals => {
         data: {
-            :number => number,
+            :number => @@number,
             :guess => nil,
-            :guesses_left => guesses_left
+            :guesses_left => @@guesses_left
         }
     }
 end
 
-get '/guess/' do
+post '/guesser/' do
     guess = params['guess'].to_i
-    guesses_left -= 1
+    @@guesses_left -= 1
     erb :web_guesser, :locals => {
         data: {
-            :number => number,
+            :number => @@number,
             :guess => guess,
-            :guesses_left => guesses_left,
-            :analysis => analyse_guess(guess, number),
-            :color => color_diff(guess, number),
+            :guesses_left => @@guesses_left,
+            :analysis => analyse_guess(guess, @@number),
+            :color => color_diff(guess, @@number),
             :cheat => params['cheat'] == 'true'
         }
     }

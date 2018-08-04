@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/new" method="GET">
+<form action="/mastermind/new" method="GET">
     <button>New game</button>
 </form>
 
@@ -22,20 +22,20 @@
 
 <hr>
 
-<% if $history and $history.size == 12 %>
-    <b>You ran out of guesses. The answer was <%= $secret.map { |v| $Colours[v] }.join %></b>
-<% elsif $history and $history.size > 0 and $history.last[:score] == [:black] * 4 %>
+<% if @@history and @@history.size == 12 %>
+    <b>You ran out of guesses. The answer was <%= @@secret.map { |v| @@Colours[v] }.join %></b>
+<% elsif @@history and @@history.size > 0 and @@history.last[:score] == [:black] * 4 %>
     <b>You won the game!</b>
 <% else %>
     <h3><i>Secret code: ? ? ? ?</i></h3>
 
     <p>Your guess:</p>
 
-    <form action="/" method="POST">
+    <form action="/mastermind/" method="POST">
         <% for i in (1..4) %>
             <select name="col<%= i %>">
                 <option value=""></option>
-                <% for key, icon in Colours %>
+                <% for key, icon in @@Colours %>
                 <option value="<%= key %>"><%= icon %></option>
                 <% end %>
             </select>
@@ -44,11 +44,11 @@
     </form>
 <% end %>
 
-<% $history.size.downto(1) do |h| %>
+<% @@history.size.downto(1) do |h| %>
     <p>
         <i><%= h-1 %></i>
-        <span><%= $history[h-1][:guess].map { |v| $Colours[v] }.join %></span>
-        <span>Score: <%= $history[h-1][:score].map{ |v| v == :black ? '▪️' : '▫️' }.join %></span>
+        <span><%= @@history[h-1][:guess].map { |v| @@Colours[v] }.join %></span>
+        <span>Score: <%= @@history[h-1][:score].map{ |v| v == :black ? '▪️' : '▫️' }.join %></span>
     </p>
 <% end %>
 

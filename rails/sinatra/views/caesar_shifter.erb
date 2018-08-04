@@ -5,7 +5,7 @@
 <body>
     <h3>Let Caesar encrypt your text:</h3>
 
-    <form action="/" method="POST">
+    <form action="/caesar/" method="POST">
         <textarea name="text" cols="50" rows="6"><% if @text %><%= @text %><% else %>Et tu, Brute?<% end %></textarea>
         <p>
             <input type='text' name='offset' value="<%= @offset ? @offset : 0 %>" />

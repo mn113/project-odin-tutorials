@@ -9,7 +9,7 @@
     <% end%>
 
     <% if data[:guesses_left] > 0 %>
-        <form action="/guess/" method="GET">
+        <form action="/guesser/" method="POST">
             <p>Try to guess what the number is!</p>
             <p>
             <input type='text' name='guess' />
@@ -27,7 +27,7 @@
         <% end %>
     <% end %>
 
-    <form method="get" action="/newnumber">
+    <form action="/guesser/new" method="GET">
         <button type="submit">Try a new number</button>
     </form>
 </body>

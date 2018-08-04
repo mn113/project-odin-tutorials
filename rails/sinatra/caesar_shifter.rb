@@ -1,11 +1,11 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
-get '/' do
+get '/caesar/new' do
     erb :caesar_shifter
 end
 
-post '/' do
+post '/caesar/' do
     @offset = params['offset'].to_i
     @text = caesar(params['text'], @offset)
     erb :caesar_shifter
