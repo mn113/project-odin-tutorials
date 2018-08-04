@@ -6,14 +6,20 @@
     <h3>Guess the number (1-100) I'm thinking of!</h3>
     <p>(It is <%= data[:number] %>)</p>
 
-    <form action="/guess/" method="GET">
-        <p>Try to guess what the number is!</p>
-        <input type='text' name='guess' />
-        <input type='submit' value='Guess!' />
-    </form>
+    <% if data[:guesses_left] > 0 %>
+        <form action="/guess/" method="GET">
+            <p>Try to guess what the number is!</p>
+            <p>
+            <input type='text' name='guess' />
+            <input type='submit' value='Guess!' />
+        </form>
+    <% end %>
 
     <% if data[:analysis] %>
-        <p style="color: <%= data[:color] %>"><%= data[:analysis] %></p>
+        <p>Guessed <%= data[:guess] %>: <span style="color: <%= data[:color] %>"><%= data[:analysis] %></span></p>
+        <% if data[:analysis] != "CORRECT!" %>
+            <p>You have <%= data[:guesses_left]%> guesses left</p>
+        <% end %>
     <% end %>
 
     <form method="get" action="/newnumber">

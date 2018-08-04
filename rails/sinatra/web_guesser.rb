@@ -2,25 +2,29 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'chroma'
 
-prng = Random.new
-number = 0
+number = rand(100)
+guesses_left = 5
 
 get '/newnumber' do
-    number = prng.rand(100) + 1     # generates 0-99
+    number = rand(100)
+    guesses_left = 5
     erb :index, :locals => {
         data: {
             :number => number,
-            :guess => nil
+            :guess => nil,
+            :guesses_left => guesses_left
         }
     }
 end
 
 get '/guess/' do
     guess = params['guess'].to_i
+    guesses_left -= 1
     erb :index, :locals => {
         data: {
             :number => number,
             :guess => guess,
+            :guesses_left => guesses_left,
             :analysis => analyse_guess(guess, number),
             :color => color_diff(guess, number)
         }
@@ -32,10 +36,10 @@ def analyse_guess(guess, number)
         'Way too high'
     elsif guess > number
         'Too high'
-    elsif guess < number
-        'Too low'
     elsif guess < number - 20
         'Way too low'
+    elsif guess < number
+        'Too low'
     elsif guess == number
         'CORRECT!'
     end
