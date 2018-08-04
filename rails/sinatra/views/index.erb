@@ -4,13 +4,18 @@
 </head>
 <body>
     <h3>Guess the number (1-100) I'm thinking of!</h3>
-    <p>(It is <%= data[:number] %>)</p>
+    <% if data[:cheat] %>
+        <p>(It is <%= data[:number] %>)</p>
+    <% end%>
 
     <% if data[:guesses_left] > 0 %>
         <form action="/guess/" method="GET">
             <p>Try to guess what the number is!</p>
             <p>
             <input type='text' name='guess' />
+            <% if data[:cheat] %>
+                <input type='hidden' name='cheat' value="true" />
+            <% end%>
             <input type='submit' value='Guess!' />
         </form>
     <% end %>

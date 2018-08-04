@@ -26,7 +26,8 @@ get '/guess/' do
             :guess => guess,
             :guesses_left => guesses_left,
             :analysis => analyse_guess(guess, number),
-            :color => color_diff(guess, number)
+            :color => color_diff(guess, number),
+            :cheat => params['cheat'] == 'true'
         }
     }
 end
