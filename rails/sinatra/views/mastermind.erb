@@ -1,0 +1,18 @@
+
+<%= @secret.value.inspect %>
+<%= @history.last.inspect %>
+
+<form action="/" method="POST">
+    <% for i in (1..4) %>
+        <select name="col<%= i %>">
+            <option value=""></option>
+            <option value="black">B</option>
+            <option value="white">W</option>
+            <option value="lightcoral">R</option>
+            <option value="khaki">Y</option>
+            <option value="darkseagreen">G</option>
+            <option value="cornflowerblue">Bl</option>
+        </select>
+    <% end %>
+    <button>Submit</button>
+</form>
