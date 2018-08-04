@@ -6,11 +6,11 @@
     <h3>Let Caesar encrypt your text:</h3>
 
     <form action="/" method="POST">
-        <textarea>
-            Et tu, Brute?
-        </textarea>
-        <input type='range' name='offset' min="0" max="26" value="<%= offset ? offset : 0 %>" />
-        <input type='submit' value='Shift it!' />
+        <textarea name="text" cols="50" rows="6"><% if @text %><%= @text %><% else %>Et tu, Brute?<% end %></textarea>
+        <p>
+            <input type='text' name='offset' value="<%= @offset ? @offset : 0 %>" />
+            <input type='submit' value='Shift it!' />
+        </p>
     </form>
 </body>
 </html>
