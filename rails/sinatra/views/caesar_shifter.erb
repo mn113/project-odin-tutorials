@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>Caesar Shifter</title>
+</head>
+<body>
+    <h3>Let Caesar encrypt your text:</h3>
+
+    <form action="/" method="POST">
+        <textarea>
+            Et tu, Brute?
+        </textarea>
+        <input type='range' name='offset' min="0" max="26" value="<%= offset ? offset : 0 %>" />
+        <input type='submit' value='Shift it!' />
+    </form>
+</body>
+</html>
+

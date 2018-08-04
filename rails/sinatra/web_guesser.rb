@@ -8,7 +8,7 @@ guesses_left = 5
 get '/newnumber' do
     number = rand(100)
     guesses_left = 5
-    erb :index, :locals => {
+    erb :web_guesser, :locals => {
         data: {
             :number => number,
             :guess => nil,
@@ -20,7 +20,7 @@ end
 get '/guess/' do
     guess = params['guess'].to_i
     guesses_left -= 1
-    erb :index, :locals => {
+    erb :web_guesser, :locals => {
         data: {
             :number => number,
             :guess => guess,
