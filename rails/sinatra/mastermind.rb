@@ -7,36 +7,45 @@ class Secret
     def initialize()
         @value = []
         4.times do
-            @value << Colours[rand(Colours.size)]
+            @value << Colours.keys[rand(Colours.keys.size)]
         end
         puts @value
     end
 end
 
-Colours = ['black', 'white', 'lightcoral', 'khaki', 'darkseagreen', 'cornflowerblue']
+$Colours = {
+    :red => '❤️',
+    :orange => '🧡',
+    :yellow => '💛',
+    :green => '💚',
+    :blue => '💙',
+    :purple => '💜'
+}
 
-@history = []
-
-get '/' do # new game route
-    @secret = Secret.new
-    @history = []
+get '/new' do   # new game route
+    $secret = Secret.new
+    $history = []
     erb :mastermind
 end
 
-post '/' do # guess made route
+get '/' do      # refresh page route
+    erb :mastermind
+end
+
+post '/' do     # make a guess route
     # extract params
-    guess = 'col1.col2.col3.col4'.split('.').map{ |key| params[key] }
+    guess = 'col1.col2.col3.col4'.split('.').map{ |key| params[key].to_sym }
     puts guess
-    @history << {
+    $history << {
         :guess => guess,
-        :score => analyse(guess)
+        :score => analyse(guess.clone)
     }
     erb :mastermind
 end
 
 def analyse(pegs)
     score = []
-    tempsecret = @secret.clone
+    tempsecret = $secret.value.clone
     # extract blacks
     pegs.each_with_index do |peg, i|
         if peg == tempsecret[i]
@@ -54,6 +63,5 @@ def analyse(pegs)
             score << :white
         end
     end
-    puts pegs, tempsecret, @secret, score
     score
 end
