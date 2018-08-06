@@ -18,6 +18,9 @@ class ArticlesController < ApplicationController
     def create  # accepts form submission
         @article = Article.new(article_params)    # contains :title & :body
         @article.save
+
+        flash.notice = "Article '#{@article.title}' created!"
+
         redirect_to article_path(@article)
     end
 
@@ -29,13 +32,18 @@ class ArticlesController < ApplicationController
     def update
         @article = Article.find(params[:id])
         @article.update(article_params)
+
+        flash.notice = "Article '#{@article.title}' updated!"
+
         redirect_to article_path(@article)
     end
 
 
     def destroy
         @article = Article.find(params[:id])
+        flash.notice = "Article '#{@article.title}' deleted!"
         @article.destroy
+
         redirect_to action: "index"
     end
 
