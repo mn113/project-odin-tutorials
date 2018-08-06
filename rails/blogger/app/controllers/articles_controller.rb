@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+    
     include ArticlesHelper
 
     def index   # shows the list of all articles
@@ -8,6 +9,8 @@ class ArticlesController < ApplicationController
 
     def show
         @article = Article.find(params[:id])
+        @comment = Comment.new  # must be here for comment form
+        @comment.article_id = @article.id
     end
 
 
