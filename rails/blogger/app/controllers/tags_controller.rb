@@ -9,7 +9,7 @@ class TagsController < ApplicationController
 
     def destroy
         @tag = Tag.find(params[:id])
-        puts @tag
+
         # first, delete all the Taggings records which reference this Tag:
         Tagging.where(tag_id: @tag.id).each{ |t| t.destroy }
 
