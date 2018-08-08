@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Blog Prototype</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+</head>
 
-  <body>
+<body>
     <p class="flash"><%= flash.notice %></p>
+    <header>
+        <h1>My Blog</h1>
+        <nav>
+            <%= link_to "All articles", articles_path %> | 
+            <%= link_to "All tags", tags_path %>
+        </nav>
+    </header>
+    <main>
     <%= yield %>
-  </body>
+    </main>
+    <footer>
+        <p>Made from a <a href="http://tutorials.jumpstartlab.com/" target="_blank">Jumpstart Lab</a> tutorial</p>
+    </footer>
+</body>
 </html>
